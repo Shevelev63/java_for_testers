@@ -2,6 +2,15 @@ package ru.stqa.geometry.figures;
 
 public record Triangle (int a, int b, int c){
 
+    public Triangle {
+        if (a < 0 || b < 0 || c < 0 ) {
+            throw new IllegalArgumentException("Одна из сторон треугольника отрицательна");
+        }
+        if (a <= b + c && b <= a + c && c <= a + b ) {
+            throw new IllegalArgumentException("Нарушено неравенство треугольника");
+        }
+    }
+
     public static void main(String[] args) {
         printTriangleArea(new Triangle(5, 5, 7));
         printTriangleSquare(new Triangle(5, 5, 7));

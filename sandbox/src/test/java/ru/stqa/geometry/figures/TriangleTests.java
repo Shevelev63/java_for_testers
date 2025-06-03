@@ -20,4 +20,14 @@ public class TriangleTests {
         double result = e.TriangleSquare2();
         Assertions.assertEquals(8.48528137423857, result);
     }
+    @Test
+
+     void cannotCreateTriangleWithNegativeSideAndUnequaleSides() {
+        try {
+            new Triangle(-5, 7, 5);
+            Assertions.fail();
+        } catch (IllegalArgumentException exception) {
+            //ОК
+        }
+    }
 }
