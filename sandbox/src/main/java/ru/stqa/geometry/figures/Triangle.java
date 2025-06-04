@@ -2,17 +2,15 @@ package ru.stqa.geometry.figures;
 
 import java.util.Objects;
 
-public record Triangle (int a, int b, int c){
+public record Triangle (int a, int b, int c) {
 
     public Triangle {
-        if (a < 0 || b < 0 || c < 0 ) {
+        if (a < 0 || b < 0 || c < 0) {
             throw new IllegalArgumentException("Одна из сторон треугольника отрицательна");
         }
-        if (a <= b + c && b <= a + c && c <= a + b) {
+        if (a >= b + c || b >= a + c || c >= a + b) {
             throw new IllegalArgumentException("Наррушено неравенство треугольника");
         }
-
-
     }
 
     public static void main(String[] args) {
@@ -38,6 +36,7 @@ public record Triangle (int a, int b, int c){
         double s= (a+b+c)/2;
         return Math.sqrt(s * (s - this.a) * (s - this.b) * (s - this.c));
     }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
