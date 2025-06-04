@@ -1,14 +1,18 @@
 package ru.stqa.geometry.figures;
 
+import java.util.Objects;
+
 public record Triangle (int a, int b, int c){
 
     public Triangle {
         if (a < 0 || b < 0 || c < 0 ) {
             throw new IllegalArgumentException("Одна из сторон треугольника отрицательна");
         }
-        if (a <= b + c || b <= a + c || c <= a + b ) {
-            throw new IllegalArgumentException("Нарушено неравенство треугольника");
+        if (a <= b + c && b <= a + c && c <= a + b) {
+            throw new IllegalArgumentException("Наррушено неравенство треугольника");
         }
+
+
     }
 
     public static void main(String[] args) {
@@ -34,6 +38,20 @@ public record Triangle (int a, int b, int c){
         double s= (a+b+c)/2;
         return Math.sqrt(s * (s - this.a) * (s - this.b) * (s - this.c));
     }
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Triangle triangle = (Triangle) o;
+        return (this.a == triangle.a || this.b == triangle.a || this.c == triangle.a)
+                && (this.a == triangle.b || this.b == triangle.b || this.c == triangle.b)
+                && (this.a == triangle.c || this.b == triangle.c || this.c == triangle.c);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(a, b, c);
+    }
 }
+
 
 

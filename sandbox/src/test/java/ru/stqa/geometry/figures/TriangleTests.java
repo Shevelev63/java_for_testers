@@ -30,4 +30,12 @@ public class TriangleTests {
             //ОК
         }
     }
+
+    @Test
+    void testEquality() {
+        var r1 = new Triangle(20, 6, 7);
+        var r2 = new Triangle(7, 20, 6);
+        Assertions.assertEquals(r1, r2);
+    }
 }
+
