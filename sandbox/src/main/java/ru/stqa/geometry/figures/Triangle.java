@@ -6,7 +6,7 @@ public record Triangle (int a, int b, int c){
         if (a < 0 || b < 0 || c < 0 ) {
             throw new IllegalArgumentException("Одна из сторон треугольника отрицательна");
         }
-        if (a <= b + c && b <= a + c && c <= a + b ) {
+        if (a <= b + c || b <= a + c || c <= a + b ) {
             throw new IllegalArgumentException("Нарушено неравенство треугольника");
         }
     }

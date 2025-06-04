@@ -24,7 +24,7 @@ public class TriangleTests {
 
      void cannotCreateTriangleWithNegativeSideAndUnequaleSides() {
         try {
-            new Triangle(-5, 7, 5);
+            new Triangle(10, 5, 5);
             Assertions.fail();
         } catch (IllegalArgumentException exception) {
             //ОК
