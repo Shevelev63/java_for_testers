@@ -42,8 +42,8 @@ public record Triangle (int a, int b, int c) {
         if (o == null || getClass() != o.getClass()) return false;
         Triangle triangle = (Triangle) o;
         return (this.a == triangle.a || this.a == triangle.b || this.a == triangle.c)
-                && (this.b == triangle.a || this.b == triangle.c || this.b == triangle.b)
-                && (this.c == triangle.a || this.c == triangle.b || this.c == triangle.c);
+                || (this.b == triangle.a || this.b == triangle.c || this.b == triangle.b)
+                || (this.c == triangle.a || this.c == triangle.b || this.c == triangle.c);
 
     }
 
