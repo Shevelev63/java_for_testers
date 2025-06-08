@@ -33,8 +33,8 @@ public class TriangleTests {
 
     @Test
     void testEquality() {
-        var r1 = new Triangle(5, 5, 5);
-        var r2 = new Triangle(5, 6, 7);
+        var r1 = new Triangle(5, 6, 5);
+        var r2 = new Triangle(6, 6, 6);
         Assertions.assertEquals(r1, r2);
     }
 }
