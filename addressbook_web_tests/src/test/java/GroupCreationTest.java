@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import java.util.NoSuchElementException;
+import org.openqa.selenium.NoSuchElementException;
 
 public class GroupCreationTest {
     private static WebDriver driver;
