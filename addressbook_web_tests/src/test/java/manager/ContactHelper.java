@@ -1,5 +1,4 @@
 package manager;
-
 import model2.AddContact;
 import org.openqa.selenium.By;
 

@@ -1,5 +1,4 @@
 package manager;
-
 import model.GroupData;
 import org.openqa.selenium.By;
 

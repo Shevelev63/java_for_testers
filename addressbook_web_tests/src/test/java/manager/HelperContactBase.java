@@ -1,5 +1,4 @@
 package manager;
-
 import org.openqa.selenium.By;
 
 public class HelperContactBase {
