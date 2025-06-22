@@ -10,10 +10,10 @@ public class HelperContactBase {
 
     protected void type(By locator, String text) {
         click(locator);
-        managerContact.driver.findElement(locator).sendKeys(text);
+        manager.driver.findElement(locator).sendKeys(text);
     }
 
     protected void click(By locator) {
-        managerContact.driver.findElement(locator).click();
+        manager.driver.findElement(locator).click();
     }
 }
