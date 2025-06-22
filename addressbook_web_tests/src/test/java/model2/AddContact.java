@@ -1,8 +1,5 @@
 package model2;
 
-import java.util.Objects;
-import manager.ApplicationManager;
-
 public record AddContact(String firstname, String lastname, String address, String mobile, String email) {
 
     public AddContact() {
