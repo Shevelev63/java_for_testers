@@ -1,23 +1,23 @@
-package managerContact;
+package manager;
 
 import model2.AddContact;
 import org.openqa.selenium.By;
 
 public class ContactHelper extends HelperContactBase {
 
-    public ContactHelper(ApplicationManagerContact managerContact) {
-        super(managerContact);
+    public ContactHelper(ApplicationManager manager) {
+        super(manager);
     }
 
     public void openAddPage() {
-        if (!managerContact.isElementPresent(By.name("new"))) {
+        if (!manager.isElementPresent(By.name("new"))) {
             click(By.linkText("add new"));
         }
     }
 
     public boolean isAddPresent() {
         openAddPage();
-        return managerContact.isElementPresent(By.name("selected[]"));
+        return manager.isElementPresent(By.name("selected[]"));
     }
 
     public void createAdd(AddContact contact) {

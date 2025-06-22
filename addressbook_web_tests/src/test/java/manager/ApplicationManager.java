@@ -10,8 +10,9 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class ApplicationManager {
 
     protected WebDriver driver;
-    private LoginHelper  session;
     private GroupHelper groups;
+    private AddLoginHelper session;
+    private ContactHelper contacts;
 
    public void init(String browser) {
         if (driver == null) {
@@ -30,18 +31,25 @@ public class ApplicationManager {
         }
 
 
-    public LoginHelper session () {
-       if (session == null) {
-           session = new LoginHelper(this);
-       }
-       return session;
-    }
-
     public GroupHelper groups() {
        if (groups == null) {
            groups = new GroupHelper(this);
        }
        return groups;
+    }
+
+    public AddLoginHelper session() {
+        if (session == null){
+            session = new AddLoginHelper(this);
+        }
+        return session;
+    }
+
+    public ContactHelper contacts() {
+        if (contacts == null) {
+            contacts = new ContactHelper(this);
+        }
+        return contacts;
     }
 
     public boolean isElementPresent(By locator) {

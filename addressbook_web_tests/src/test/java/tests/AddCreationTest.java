@@ -1,4 +1,4 @@
-package testsContact;
+package tests;
 
 import model2.AddContact;
 import org.junit.jupiter.api.Test;

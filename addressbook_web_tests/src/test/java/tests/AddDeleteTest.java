@@ -1,14 +1,16 @@
-package testsContact;
+package tests;
 
 import model2.AddContact;
 import org.junit.jupiter.api.Test;
 
-public class ContactModoficationTest extends TestBaseAdd {
+public class AddDeleteTest extends TestBaseAdd {
+
     @Test
-    void canModifyContacts() {
+    public void canDeleteAdd() {
         if (!app.contacts().isAddPresent()) {
             app.contacts().createAdd(new AddContact("Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com"));
         }
-        app.contacts().modifyContacts(new AddContact());
+        app.contacts().deleteAdd();
     }
+
 }

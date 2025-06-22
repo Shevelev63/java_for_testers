@@ -1,14 +1,14 @@
-package managerContact;
+package manager;
 
 import org.openqa.selenium.By;
 
 public class AddLoginHelper extends HelperContactBase {
 
-    public AddLoginHelper(ApplicationManagerContact managerContact) {
-        super(managerContact);
+    public AddLoginHelper(ApplicationManager manager) {
+        super(manager);
     }
 
-    void login(String user, String password) {
+    public void login(String user, String password) {
         type(By.name("user"), user);
         type(By.name("pass"), password);
         click(By.xpath("//input[@value=\'Login\']"));
