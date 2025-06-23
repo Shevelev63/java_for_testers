@@ -3,7 +3,7 @@ package tests;
 import model2.AddContact;
 import org.junit.jupiter.api.Test;
 
-public class AddDeleteTest extends TestBaseAdd {
+public class AddDeleteTest extends TestBase {
 
     @Test
     public void canDeleteAdd() {

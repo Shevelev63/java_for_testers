@@ -5,6 +5,7 @@ public class HelperContactBase {
     protected final ApplicationManager manager;
 
     public HelperContactBase(ApplicationManager manager) {
+
         this.manager = manager;
     }
 
