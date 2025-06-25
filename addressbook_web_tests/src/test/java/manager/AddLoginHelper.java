@@ -1,7 +1,7 @@
 package manager;
 import org.openqa.selenium.By;
 
-public class AddLoginHelper extends HelperContactBase {
+public class AddLoginHelper extends HelperBase {
 
     public AddLoginHelper(ApplicationManager manager) {
         super(manager);

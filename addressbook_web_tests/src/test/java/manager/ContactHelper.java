@@ -2,7 +2,7 @@ package manager;
 import model2.AddContact;
 import org.openqa.selenium.By;
 
-public class ContactHelper extends HelperContactBase {
+public class ContactHelper extends HelperBase {
 
     public ContactHelper(ApplicationManager manager) {
         super(manager);
