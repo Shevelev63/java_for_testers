@@ -3,7 +3,7 @@ package model2;
 public record AddContact(String firstname, String lastname, String address, String mobile, String email) {
 
     public AddContact() {
-        this("","","","","");
+        this("Petrov","Alexei","street1","8929777","3@mail.ru");
     }
 
     public AddContact withFirstame(String firstname) {
