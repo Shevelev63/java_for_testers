@@ -1,27 +1,33 @@
 package tests;
 
-import model.GroupData;
 import model2.AddContact;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Random;
 
 public class AddDeleteTest extends TestBase {
 
     @Test
     public void canDeleteAdd() {
         if (!(app.contacts().getCount() == 0)) {
-            app.contacts().createAdd(new AddContact("Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com"));
+            app.contacts().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com"));
         }
-        int addCount = app.contacts().getCount();
-        app.contacts().deleteAdd();
-        int newGroupCount = app.contacts().getCount();
-        Assertions.assertEquals(addCount - 1, newGroupCount);
+        var oldContacts = app.contacts().getList();
+        var rnd = new Random();
+        var index = rnd.nextInt(oldContacts.size());
+        app.contacts().deleteAdd(oldContacts.get(index));
+        var newContacts = app.contacts().getList();
+        var expectedList = new ArrayList<>(oldContacts);
+        expectedList.remove(index);
+        Assertions.assertEquals(newContacts, expectedList);
     }
 
     @Test
     void canDeleteAllContactsAtOnce() {
         if (app.contacts().getCount() == 0) {
-            app.contacts().createAdd(new AddContact("Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com"));
+            app.contacts().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com"));
         }
         app.contacts().deleteAllContacts();
         Assertions.assertEquals(0, app.contacts().getCount());

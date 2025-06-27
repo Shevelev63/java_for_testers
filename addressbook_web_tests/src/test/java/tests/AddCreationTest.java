@@ -2,7 +2,6 @@ package tests;
 
 import model2.AddContact;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -26,13 +25,23 @@ public class AddCreationTest extends TestBase {
             for (var lastname : List.of("", "Fedorov")) {
                 for (var address : List.of("", "Lenina")) {
                     for (var mobile : List.of("", "5455")) {
-                        for (var email : List.of("", "1@gmail.com")) ;
+                        for (var email : List.of("", "1@gmail.com")) {
+                            result.add(new AddContact().withFirstame(firstname)
+                                    .withLastame(lastname)
+                                    .withAddress(address)
+                                    .withMobile(mobile)
+                                    .withEmail(email));
+                        }
                     }
                 }
             }
         }
         for (int i = 0; i < 5; i++) {
-            result.add(new AddContact(randomString(i * 5), randomString(i * 5), randomString(i * 5), randomString(i * 5), randomString(i * 5)));
+            result.add(new AddContact().withFirstame(randomString(i * 5))
+                    .withLastame(randomString(i * 5))
+                    .withAddress(randomString(i * 5))
+                    .withMobile(randomString(i * 5))
+                    .withEmail(randomString(i * 5)));
         }
         return result;
     }
@@ -48,7 +57,7 @@ public class AddCreationTest extends TestBase {
 
     public static List<AddContact> negativeContactProvider() {
         var result = new ArrayList<AddContact>(List.of(
-                new AddContact("Aleksiy'", "Ivanov", "", "", "")));
+                new AddContact("", "Aleksiy'", "Ivanov", "", "", "")));
         return result;
     }
 }

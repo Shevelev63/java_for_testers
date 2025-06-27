@@ -3,6 +3,9 @@ import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 public class GroupDeleteTest extends TestBase {
 
   @Test
@@ -11,10 +14,14 @@ public class GroupDeleteTest extends TestBase {
     if (app.groups().getCount() == 0) {
       app.groups().CreateGroup(new GroupData(app));
     }
-    int groupCount = app.groups().getCount();
-    app.groups().deleteGroup(app);
-    int newGroupCount = app.groups().getCount();
-    Assertions.assertEquals(groupCount - 1, newGroupCount);
+    var oldGroup = app.groups().getList();
+    var rnd = new Random();
+    var index = rnd.nextInt(oldGroup.size());
+    app.groups().deleteGroup(oldGroup.get(index).manager());
+    var newGroups = app.groups().getList();
+    var expectedList = new ArrayList<>(oldGroup);
+    expectedList.remove(index);
+    Assertions.assertEquals(newGroups, expectedList);
   }
 
   @Test

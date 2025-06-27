@@ -27,14 +27,15 @@ public class GroupCreationTest extends TestBase {
                 new GroupData(app)));
         for (var group_name : List.of("", "1")) {
             for (var group_header : List.of("", "2")) {
-                for (var group_footer : List.of("", "3"));
+                for (var group_footer : List.of("", "3")) ;
                 for (int i = 0; i < 5; i++) {
                     result.add(new GroupData(app));
                 }
-                return result;
             }
         }
+        return result;
     }
+
 
     @ParameterizedTest
     @MethodSource("negativeGroupProvider")
