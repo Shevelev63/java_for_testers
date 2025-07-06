@@ -1,6 +1,5 @@
 package manager;
 import model.GroupData;
-import model2.AddContact;
 import org.openqa.selenium.By;
 
 import java.util.ArrayList;
@@ -8,12 +7,8 @@ import java.util.List;
 
 public class GroupHelper extends HelperBase {
 
-    private final ApplicationManager manager;
-    private GroupData form;
-
     public GroupHelper(ApplicationManager manager) {
         super(manager);
-        this.manager = manager;
     }
 
     public void openGroupsPage() {
@@ -22,15 +17,15 @@ public class GroupHelper extends HelperBase {
         }
     }
 
-    public void CreateGroup(GroupData groupData) {
+    public void CreateGroup(GroupData group) {
         openGroupsPage();
-        initGroupCreation(groupData);
-        fillGroupForm(form);
-        submitGroupCreation(groupData);
+        initGroupCreation(manager);
+        fillGroupForm(group);
+        submitGroupCreation(manager);
         returnGroupsPage();
     }
 
-    public void modifyGroup(GroupData modifiedGroup) {
+    public void modifyGroup(GroupData group, GroupData modifiedGroup) {
         openGroupsPage();
         selectGroup();
         initGroupModification();
@@ -39,15 +34,15 @@ public class GroupHelper extends HelperBase {
         returnGroupsPage();
     }
 
-    private static void submitGroupCreation(GroupData groupData) {
-        groupData.manager().driver.findElement(By.name("submit")).click();
+    private static void submitGroupCreation(ApplicationManager manager) {
+        manager.driver.findElement(By.name("submit")).click();
     }
 
-    private static void initGroupCreation(GroupData groupData) {
-        groupData.manager().driver.findElement(By.name("new")).click();
+    private static void initGroupCreation(ApplicationManager manager) {
+        manager.driver.findElement(By.name("new")).click();
     }
 
-    public void deleteGroup(ApplicationManager manager) {
+    public void deleteGroup(GroupData group) {
         openGroupsPage();
         selectGroup();
         deleteSelectedGroups(manager);
@@ -70,7 +65,10 @@ public class GroupHelper extends HelperBase {
     }
 
     private void fillGroupForm(GroupData form) {
-        this.form = form;
+        createGroupFields();
+    }
+
+    private void createGroupFields() {
         type("group_name", "TEST8");
         type("group_header", "Group2");
         manager.driver.findElement(By.name("group_footer")).sendKeys("Group2");
@@ -116,7 +114,6 @@ public class GroupHelper extends HelperBase {
             var name = span.getText();
             var checkbox = span.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
-            groups.add(new GroupData().withId(id));
         }
         return groups;
     }

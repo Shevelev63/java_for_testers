@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class AddCreationTest extends TestBase {
@@ -13,10 +14,18 @@ public class AddCreationTest extends TestBase {
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateMultipleContacts(AddContact add) {
-        int addCount = app.contacts().getCount();
+        var oldContacts = app.contacts().getList();
         app.contacts().createAdd(add);
-        int newAddCount = app.contacts().getCount();
-        Assertions.assertEquals(addCount + 1, newAddCount);
+        var newContacts = app.contacts().getList();
+        Comparator<AddContact> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newContacts.sort(compareById);
+        var expectedList = new ArrayList<>(oldContacts);
+        expectedList.add(add.withId(newContacts.get(newContacts.size() - 1).id()));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newContacts, expectedList);
+
     }
 
     public static List<AddContact> contactProvider() {
@@ -49,10 +58,10 @@ public class AddCreationTest extends TestBase {
     @ParameterizedTest
     @MethodSource("negativeContactProvider")
     public void canNotCreateContacts(AddContact add) {
-        int addCount = app.contacts().getCount();
+        var oldContacts = app.contacts().getList();
         app.contacts().createAdd(add);
-        int newAddCount = app.contacts().getCount();
-        Assertions.assertEquals(addCount, newAddCount);
+        var newContacts = app.contacts().getList();
+        Assertions.assertEquals(newContacts, oldContacts);
     }
 
     public static List<AddContact> negativeContactProvider() {

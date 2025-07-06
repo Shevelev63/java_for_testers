@@ -2,7 +2,6 @@ package manager;
 import model2.AddContact;
 import org.openqa.selenium.By;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +38,9 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value=\'Delete\']"));
     }
 
-    public void modifyContacts(AddContact modifiedContacts) {
+    public void modifyContacts(AddContact contact, AddContact modifiedContacts) {
         openHomePage();
-        selectContact(null);
+        selectContact(contact);
         initContactModificatiion();
         fillAddForm(modifiedContacts);
         updateContactModofication();
@@ -96,11 +95,12 @@ public class ContactHelper extends HelperBase {
     }
 
     public List<AddContact> getList() {
+        openHomePage();
         var contacts = new ArrayList<AddContact>();
-        var tds = manager.driver.findElements(By.cssSelector("td.center"));
-        for (var td : tds) {
-            var name = td.getText();
-            var checkbox = td.findElement(By.name("selected[]"));
+        var trs = manager.driver.findElements(By.cssSelector("tr.entry"));
+        for (var tr : trs) {
+            var name = tr.getText();
+            var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
             contacts.add(new AddContact().withId(id).withFirstame(name));
         }

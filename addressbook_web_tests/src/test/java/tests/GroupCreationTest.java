@@ -17,19 +17,19 @@ public class GroupCreationTest extends TestBase {
     @MethodSource("groupProvider")
     public void canCreateMultipleGroup(GroupData groupData) {
         int groupCount = app.groups().getCount();
-        app.groups().CreateGroup(new GroupData(app));
+        app.groups().CreateGroup(new GroupData());
         int newGroupCount = app.groups().getCount();
         Assertions.assertEquals(groupCount + 1, newGroupCount);
     }
 
     public static List<GroupData> groupProvider() {
         var result = new ArrayList<GroupData>(List.of(
-                new GroupData(app)));
+                new GroupData()));
         for (var group_name : List.of("", "1")) {
             for (var group_header : List.of("", "2")) {
                 for (var group_footer : List.of("", "3")) ;
                 for (int i = 0; i < 5; i++) {
-                    result.add(new GroupData(app));
+                    result.add(new GroupData());
                 }
             }
         }
@@ -41,15 +41,15 @@ public class GroupCreationTest extends TestBase {
     @MethodSource("negativeGroupProvider")
     public void canNotCreateGroup(GroupData groupData) {
         int groupCount = app.groups().getCount();
-        app.groups().CreateGroup(new GroupData(app));
+        app.groups().CreateGroup(new GroupData());
         int newGroupCount = app.groups().getCount();
         Assertions.assertEquals(groupCount, newGroupCount);
     }
 
     public static List<GroupData> negativeGroupProvider() {
         var result = new ArrayList<GroupData>(List.of(
-                new GroupData(app),
-                new GroupData(app)));
+                new GroupData(),
+                new GroupData()));
         return result;
     }
 }

@@ -12,12 +12,12 @@ public class GroupDeleteTest extends TestBase {
   public void canDeleteGroup() {
     app.groups();
     if (app.groups().getCount() == 0) {
-      app.groups().CreateGroup(new GroupData(app));
+      app.groups().CreateGroup(new GroupData());
     }
     var oldGroup = app.groups().getList();
     var rnd = new Random();
     var index = rnd.nextInt(oldGroup.size());
-    app.groups().deleteGroup(oldGroup.get(index).manager());
+    app.groups().deleteGroup(oldGroup.get(index));
     var newGroups = app.groups().getList();
     var expectedList = new ArrayList<>(oldGroup);
     expectedList.remove(index);
@@ -27,7 +27,7 @@ public class GroupDeleteTest extends TestBase {
   @Test
   void canDeleteAllGroupsAtOnce() {
     if (app.groups().getCount() == 0) {
-      app.groups().CreateGroup(new GroupData(app));
+      app.groups().CreateGroup(new GroupData());
     }
     app.groups().deleteAllGroups();
     Assertions.assertEquals(0, app.groups().getCount());
