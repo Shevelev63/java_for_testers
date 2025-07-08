@@ -66,10 +66,11 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"), contact.address());
         type(By.name("mobile"), contact.mobile());
         type(By.name("email"), contact.email());
+        attach(By.name("photo"), contact.photo());
     }
 
     private void initContactModificatiion() {
-        click(By.xpath("//img[@alt='Edit']"));
+        click(By.cssSelector(String.format("//img[@alt='Edit']")));
     }
 
     private void selectContact(AddContact contact) {
@@ -99,10 +100,18 @@ public class ContactHelper extends HelperBase {
         var contacts = new ArrayList<AddContact>();
         var trs = manager.driver.findElements(By.cssSelector("tr.entry"));
         for (var tr : trs) {
-            var name = tr.getText();
-            var checkbox = tr.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
-            contacts.add(new AddContact().withId(id).withFirstame(name));
+            var tds = manager.driver.findElements(By.cssSelector("td.center"));
+            for (var td : tds) {
+                var a = td.findElement(By.name("selected[]"));
+                var lastname = a.getAttribute("title");
+                var b = td.findElement(By.name("selected[]"));
+                var firstname = b.getAttribute("alt");
+                var c = td.findElement(By.name("selected[]"));
+                var address = c.getAttribute("accept");
+                var checkbox = td.findElement(By.name("selected[]"));
+                var id = checkbox.getAttribute("value");
+                contacts.add(new AddContact().withId(id).withFirstame(lastname).withLastame(firstname).withAddress(address));
+            }
         }
         return contacts;
     }

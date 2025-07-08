@@ -27,7 +27,7 @@ public class GroupHelper extends HelperBase {
 
     public void modifyGroup(GroupData group, GroupData modifiedGroup) {
         openGroupsPage();
-        selectGroup();
+        selectGroup(group);
         initGroupModification();
         fillGroupForm(modifiedGroup);
         submitGroupModification();
@@ -44,7 +44,7 @@ public class GroupHelper extends HelperBase {
 
     public void deleteGroup(GroupData group) {
         openGroupsPage();
-        selectGroup();
+        selectGroup(group);
         deleteSelectedGroups(manager);
         returnGroupsPage();
     }
@@ -84,8 +84,8 @@ public class GroupHelper extends HelperBase {
 
     }
 
-    private void selectGroup() {
-        manager.driver.findElement(By.name("selected[]")).click();
+    private void selectGroup(GroupData group) {
+        manager.driver.findElement(By.cssSelector(String.format("input[value='%s']", group.id())));
 
     }
 
