@@ -11,14 +11,14 @@ public class AddDeleteTest extends TestBase {
 
     @Test
     public void canDeleteAdd() {
-        if (!(app.contacts().getCount() == 0)) {
-            app.contacts().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", ""));
+        if (!(app.hbm().getContactCount() == 0)) {
+            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", ""));
         }
-        var oldContacts = app.contacts().getList();
+        var oldContacts = app.hbm().getContactList();
         var rnd = new Random();
         var index = rnd.nextInt(oldContacts.size());
         app.contacts().deleteAdd(oldContacts.get(index));
-        var newContacts = app.contacts().getList();
+        var newContacts = app.hbm().getContactList();
         var expectedList = new ArrayList<>(oldContacts);
         expectedList.remove(index);
         Assertions.assertEquals(newContacts, expectedList);
@@ -26,11 +26,11 @@ public class AddDeleteTest extends TestBase {
 
     @Test
     void canDeleteAllContactsAtOnce() {
-        if (app.contacts().getCount() == 0) {
-            app.contacts().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", ""));
+        if (app.hbm().getContactCount() == 0) {
+            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", ""));
         }
         app.contacts().deleteAllContacts();
-        Assertions.assertEquals(0, app.contacts().getCount());
+        Assertions.assertEquals(0, app.hbm().getContactCount());
     }
 
 }

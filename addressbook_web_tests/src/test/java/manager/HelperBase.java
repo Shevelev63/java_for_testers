@@ -20,7 +20,6 @@ public class HelperBase {
         manager.driver.findElement(locator).click();
     }
 
-
     protected void attach(By locator, String file) {
         manager.driver.findElement(locator).sendKeys(Paths.get(file).toAbsolutePath().toString());
     }

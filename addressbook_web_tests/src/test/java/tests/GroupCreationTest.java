@@ -2,6 +2,7 @@ package tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import common.CommonFunction;
 import model.GroupData;
 import model2.AddContact;
 import org.junit.jupiter.api.Assertions;
@@ -12,18 +13,27 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GroupCreationTest extends TestBase {
 
 
     @ParameterizedTest
-    @MethodSource("groupProvider")
-    public void canCreateMultipleGroup(GroupData groupData) {
-        int groupCount = app.groups().getCount();
-        app.groups().CreateGroup(new GroupData());
-        int newGroupCount = app.groups().getCount();
-        Assertions.assertEquals(groupCount + 1, newGroupCount);
+    @MethodSource("singleRandomGroup")
+    public void canCreateMultipleGroup(GroupData group) {
+        var oldGroups = app.hbm().getGroupList();
+        app.groups().CreateGroup(group);
+        var newGroups = app.hbm().getGroupList();
+        Comparator<GroupData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newGroups.sort(compareById);
+        var maxID = newGroups.get(newGroups.size() - 1).id();
+        var expectedList = new ArrayList<>(oldGroups);
+        expectedList.add(group.withId(maxID));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newGroups, expectedList);
     }
 
     public static List<GroupData> groupProvider() throws IOException {
@@ -40,6 +50,13 @@ public class GroupCreationTest extends TestBase {
         var value = mapper.readValue(new File("groups.json"), new TypeReference<List<GroupData>>() {});
         result.addAll(value);
         return result;
+    }
+
+    public static List<GroupData> singleRandomGroup() {
+        return List.of(new GroupData().withName(CommonFunction.randomString(10))
+                .withHeader(CommonFunction.randomString(20))
+                .withFooter(CommonFunction.randomString(30)));
+
     }
 
 
