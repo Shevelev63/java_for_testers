@@ -15,8 +15,11 @@ public class ApplicationManager {
     private AddLoginHelper session;
     private ContactHelper contacts;
     private Properties properties;
+<<<<<<< HEAD
     private JdbcHelper jdbc;
     private HibernateHelper hbm;
+=======
+>>>>>>> origin/main
 
    public void init(String browser, Properties properties) {
        this.properties = properties;
