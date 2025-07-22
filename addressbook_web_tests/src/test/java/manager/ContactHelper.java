@@ -2,6 +2,7 @@ package manager;
 import model.GroupData;
 import model2.AddContact;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
@@ -120,10 +121,9 @@ public class ContactHelper extends HelperBase {
     }
 
     private void selectAllContacts() {
-        var checkboxes = manager.driver.findElements(By.name("selected[]"));
-        for (var checkbox : checkboxes) {
-            checkbox.click();
-        }
+        manager.driver.
+                findElements(By.name("selected[]")).
+                forEach(WebElement::click);
     }
 
     public List<AddContact> getList() {
