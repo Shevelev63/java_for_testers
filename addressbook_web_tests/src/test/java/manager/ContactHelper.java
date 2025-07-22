@@ -1,6 +1,8 @@
 package manager;
+import model.GroupData;
 import model2.AddContact;
 import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,19 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
+    public void createAdd2(AddContact contact, GroupData group) {
+        openAddPage();
+        fillAddForm(contact);
+        selectGroup(group);
+        selectorCreateAdd();
+        openHomePage();
+    }
+
+    private void selectGroup(GroupData group) {
+        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
+    }
+
+
     private void selectorCreateAdd() {
         click(By.cssSelector("input:nth-child(75)"));
     }
@@ -32,6 +47,18 @@ public class ContactHelper extends HelperBase {
         openHomePage();
         selectContact(contact);
         deleteSelectedContact();
+    }
+
+    public void deleteAdd2(AddContact contact, GroupData group) {
+        openHomePage();
+        selectGroupList(group);
+        selectContact(contact);
+        deleteSelectedContact();
+        removeFromContact();
+    }
+
+    private void selectGroupList(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
     }
 
     private void deleteSelectedContact() {
@@ -75,6 +102,10 @@ public class ContactHelper extends HelperBase {
 
     private void selectContact(AddContact contact) {
         click(By.cssSelector(String.format("input[value='%s']", contact.id())));
+    }
+
+    private void removeFromContact() {
+        click(By.linkText("remove"));
     }
 
     public int getCount() {

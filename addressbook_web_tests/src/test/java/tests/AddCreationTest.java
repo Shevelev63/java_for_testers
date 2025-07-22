@@ -6,6 +6,7 @@ import common.CommonFunction;
 import model.GroupData;
 import model2.AddContact;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -70,5 +71,21 @@ public class AddCreationTest extends TestBase {
         var result = new ArrayList<AddContact>(List.of(
                 new AddContact("", "Aleksiy'", "Ivanov", "", "", "","")));
         return result;
+    }
+
+    @Test
+    void canCreateContactInGroup() {
+        var contact = new AddContact()
+                .withFirstame(CommonFunction.randomString(3))
+                .withLastame(CommonFunction.randomString(3))
+                .withAddress(CommonFunction.randomString(3));
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().CreateGroup(new GroupData());
+        }
+        var group = app.hbm().getGroupList().get(0);
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().createAdd2(contact, group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
     }
 }

@@ -1,13 +1,11 @@
 package manager.hbm;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.List;
 
-    @Entity
+@Entity
     @Table(name = "addressbook")
     public class ContactRecord {
 

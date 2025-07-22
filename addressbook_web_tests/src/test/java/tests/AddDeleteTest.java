@@ -1,5 +1,7 @@
 package tests;
 
+import common.CommonFunction;
+import model.GroupData;
 import model2.AddContact;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -31,6 +33,22 @@ public class AddDeleteTest extends TestBase {
         }
         app.contacts().deleteAllContacts();
         Assertions.assertEquals(0, app.hbm().getContactCount());
+    }
+
+    @Test
+    void canDeleteContactInGroup() {
+        var contact = new AddContact()
+                .withFirstame(CommonFunction.randomString(3))
+                .withLastame(CommonFunction.randomString(3))
+                .withAddress(CommonFunction.randomString(3));
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().CreateGroup(new GroupData());
+        }
+        var group = app.hbm().getGroupList().get(0);
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().deleteAdd2(contact, group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() - 1, newRelated.size());
     }
 
 }
