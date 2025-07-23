@@ -114,11 +114,11 @@ public class ContactHelper extends HelperBase {
     }
 
     private void initContactModificatiion(AddContact contact) {
-        click(By.xpath(String.format("//input[@id='%s']/../..td[7]", contact.id())));
+        click(By.xpath(String.format("//input[@id='%s']/../..td[6]", contact.id())));
     }
 
     private void initContactModificatiion2(AddContact contact) {
-        click(By.xpath(String.format("//input[@id='%s']/../..td[0]", contact.id())));
+        click(By.xpath(String.format("//input[@id='%s']/../..td[1]", contact.id())));
     }
 
     private void selectContact(AddContact contact) {
@@ -154,9 +154,9 @@ public class ContactHelper extends HelperBase {
             var tds = manager.driver.findElements(By.cssSelector("td.center"));
             var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
-            var lastname = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[1]"))).getText();
-            var firstname = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[2]"))).getText();
-            var address = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[3]"))).getText();
+            var lastname = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[2]"))).getText();
+            var firstname = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[3]"))).getText();
+            var address = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[4]"))).getText();
             contacts.add(new AddContact().withId(id).withFirstame(lastname).withLastame(firstname).withAddress(address));
         }
         return contacts;
@@ -164,5 +164,9 @@ public class ContactHelper extends HelperBase {
 
     public String getPhones(AddContact contact) {
        return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[6]", contact.id()))).getText();
+    }
+
+    public Object getAddress(AddContact contact) {
+        return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[4]", contact.id()))).getText();
     }
 }
