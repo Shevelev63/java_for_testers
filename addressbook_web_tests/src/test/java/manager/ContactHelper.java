@@ -69,7 +69,7 @@ public class ContactHelper extends HelperBase {
     public void modifyContacts(AddContact contact, AddContact modifiedContacts) {
         openHomePage();
         selectContact(contact);
-        initContactModificatiion();
+        initContactModificatiion(contact);
         fillAddForm(modifiedContacts);
         updateContactModofication();
         returnToHomePage();
@@ -97,8 +97,8 @@ public class ContactHelper extends HelperBase {
         attach(By.name("photo"), contact.photo());
     }
 
-    private void initContactModificatiion() {
-        click(By.xpath("//td[id]/a/img"));
+    private void initContactModificatiion(AddContact contact) {
+        click(By.xpath(String.format("//input[@id='%s']/../..td[7]", contact.id())));
     }
 
     private void selectContact(AddContact contact) {
@@ -132,13 +132,17 @@ public class ContactHelper extends HelperBase {
         var trs = manager.driver.findElements(By.cssSelector("tr.entry"));
         for (var tr : trs) {
             var tds = manager.driver.findElements(By.cssSelector("td.center"));
-            var lastname = tr.getAttribute("title");
-            var firstname = tr.getAttribute("alt");
-            var address = tr.getAttribute("accept");
             var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
+            var lastname = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[1]"))).getText();
+            var firstname = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[2]"))).getText();
+            var address = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[3]"))).getText();
             contacts.add(new AddContact().withId(id).withFirstame(lastname).withLastame(firstname).withAddress(address));
         }
         return contacts;
+    }
+
+    public String getPhones(AddContact contact) {
+        manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[6]", contact.id()))).getText();
     }
 }

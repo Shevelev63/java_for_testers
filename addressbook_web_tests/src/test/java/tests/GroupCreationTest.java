@@ -15,6 +15,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class GroupCreationTest extends TestBase {
 
@@ -30,10 +34,14 @@ public class GroupCreationTest extends TestBase {
         };
         newGroups.sort(compareById);
         var maxID = newGroups.get(newGroups.size() - 1).id();
+        var extraGroups = newGroups.stream().filter(g -> ! oldGroups.contains(g)).toList();
+        var newId = extraGroups.get(0).id();
+
+
         var expectedList = new ArrayList<>(oldGroups);
         expectedList.add(group.withId(maxID));
         expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
     }
 
     public static List<GroupData> groupProvider() throws IOException {
@@ -52,10 +60,12 @@ public class GroupCreationTest extends TestBase {
         return result;
     }
 
-    public static List<GroupData> singleRandomGroup() {
-        return List.of(new GroupData().withName(CommonFunction.randomString(10))
+    public static Stream<GroupData> singleRandomGroup() {
+        Supplier<GroupData> randomGroup = () -> new GroupData()
+                .withName(CommonFunction.randomString(10))
                 .withHeader(CommonFunction.randomString(20))
-                .withFooter(CommonFunction.randomString(30)));
+                .withFooter(CommonFunction.randomString(30));
+        return Stream.generate(randomGroup).limit(1);
 
     }
 

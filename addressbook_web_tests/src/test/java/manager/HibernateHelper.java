@@ -9,6 +9,7 @@ import org.hibernate.cfg.Configuration;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class HibernateHelper extends HelperBase {
@@ -27,11 +28,7 @@ public class HibernateHelper extends HelperBase {
     }
 
     static List<GroupData> convertList(List<GroupRecord> records) {
-        List<GroupData> result = new ArrayList<>();
-        for (var record : records) {
-            result.add(convert(record));
-        }
-        return result;
+        return records.stream().map(HibernateHelper::convert).toList();
     }
 
     private static GroupData convert(GroupRecord record) {
@@ -67,11 +64,8 @@ public class HibernateHelper extends HelperBase {
     }
 
     static List<AddContact> convertListContact(List<ContactRecord> contactRecords) {
-        List<AddContact> result = new ArrayList<>();
-        for (var contactRecord : contactRecords) {
-            result.add(convertContact(contactRecord));
-        }
-        return result;
+        return contactRecords.stream().map(HibernateHelper::convertContact).toList();
+
     }
 
     private static AddContact convertContact(ContactRecord contactRecord) {

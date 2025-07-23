@@ -12,6 +12,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Supplier;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Generator {
 
@@ -25,7 +29,7 @@ public class Generator {
     String format;
 
     @Parameter(names={"--count", "-n"})
-    String count;
+    int count;
 
     public static void main (String[] args) throws IOException {
         var generator = new Generator();
@@ -53,28 +57,25 @@ public class Generator {
     }
     }
 
+    private Object generateData(Supplier<Object> dataSupplier) {
+        return Stream.generate(dataSupplier).limit(count).collect(Collectors.toList());
+    }
+
+
     private Object generateContacts() {
-        var result = new ArrayList<AddContact>();
-        for (int i = 0; i < 5; i++) {
-            result.add(new AddContact().withFirstame(CommonFunction.randomString(i * 2))
-                    .withLastame(CommonFunction.randomString(i * 2))
-                    .withAddress(CommonFunction.randomString(i * 2))
-                    .withMobile(CommonFunction.randomString(i * 2))
-                    .withEmail(CommonFunction.randomString(i * 2))
-                    .withPhoto(CommonFunction.randomFile("src/test/resources/images")));
-        }
-        return result;
+        return generateData(() -> new AddContact()
+                .withFirstame(CommonFunction.randomString(2))
+                .withLastame(CommonFunction.randomString(2))
+                .withAddress(CommonFunction.randomString(2))
+                .withMobile(CommonFunction.randomString(2))
+                .withEmail(CommonFunction.randomString(2)));
     }
 
     private Object generateGroups() {
-        var result = new ArrayList<GroupData>();
-        for (int i = 0; i < 5; i++) {
-            result.add(new GroupData()
-                    .withName(CommonFunction.randomString(i * 2))
-                    .withHeader(CommonFunction.randomString(i * 2))
-                    .withFooter(CommonFunction.randomString(i * 2)));
-        }
-        return result;
+        return generateData(() -> new GroupData()
+                .withName(CommonFunction.randomString(2))
+                .withHeader(CommonFunction.randomString(2))
+                .withFooter(CommonFunction.randomString(2)));
     }
 
     private void save (Object data) throws IOException {

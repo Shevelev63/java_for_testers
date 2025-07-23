@@ -1,5 +1,6 @@
 package tests;
 
+import common.CommonFunction;
 import model.GroupData;
 import model2.AddContact;
 import org.junit.jupiter.api.Assertions;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Random;
+import java.util.Set;
 
 public class GroupModificationTest extends TestBase {
 
@@ -19,7 +21,7 @@ public class GroupModificationTest extends TestBase {
         var oldGroups = app.hbm().getGroupList();
         var rnd = new Random();
         var index = rnd.nextInt(oldGroups.size());
-        var testGroups = new GroupData();
+        var testGroups = new GroupData().withName(CommonFunction.randomString(10));
         app.groups().modifyGroup(oldGroups.get(index), testGroups);
         var newGroups = app.hbm().getGroupList();
         var expectedList = new ArrayList<>(oldGroups);
@@ -29,6 +31,6 @@ public class GroupModificationTest extends TestBase {
         };
         newGroups.sort(compareById);
         expectedList.sort(compareById);
-        Assertions.assertEquals(newGroups, expectedList);
+        Assertions.assertEquals(Set.copyOf(newGroups), Set.copyOf(expectedList));
     }
 }
