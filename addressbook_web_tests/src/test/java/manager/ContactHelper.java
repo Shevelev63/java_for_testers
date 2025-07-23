@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ContactHelper extends HelperBase {
 
@@ -166,7 +168,22 @@ public class ContactHelper extends HelperBase {
        return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[6]", contact.id()))).getText();
     }
 
-    public Object getAddress(AddContact contact) {
+    public String getAddress(AddContact contact) {
         return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[4]", contact.id()))).getText();
+    }
+
+    public String getEmails(AddContact contact) {
+        return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[5]", contact.id()))).getText();
+    }
+
+    public Map<String, String> getPhones2() {
+        var result = new HashMap<String, String>();
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row: rows) {
+            var id = row.findElement(By.name("input")).getAttribute("id");
+            var phones = row.findElements(By.tagName("td")).get(5).getText();
+            result.put(id, phones);
+        }
+        return result;
     }
 }

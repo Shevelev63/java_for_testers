@@ -1,6 +1,5 @@
 package tests;
 
-import common.CommonFunction;
 import model.GroupData;
 import model2.AddContact;
 import org.junit.jupiter.api.Assertions;
@@ -14,7 +13,7 @@ public class ContactModoficationTest extends TestBase {
     @Test
     void canModifyContacts() {
         if (!(app.hbm().getContactCount() == 0)) {
-            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "","" , "", ""));
+            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "","" , "", "", "", ""));
         }
         var oldContacts = app.hbm().getContactList();
         var rnd = new Random();
@@ -35,7 +34,7 @@ public class ContactModoficationTest extends TestBase {
     @Test
     void canAddContactInGroup() {
         if (!(app.hbm().getContactCount() == 0)) {
-            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "","" , "", ""));
+            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "","" , "", "", "", ""));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().CreateGroup(new GroupData());

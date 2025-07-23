@@ -27,6 +27,8 @@ import java.util.List;
         public String home;
         public String work;
         public String phone2;
+        public String email2;
+        public String email3;
 
 
 
