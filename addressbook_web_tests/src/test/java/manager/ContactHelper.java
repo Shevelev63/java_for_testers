@@ -29,10 +29,9 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
-    public void createAdd2(AddContact contact, GroupData group) {
+    public void createAdd2() {
         openAddPage();
-        fillAddForm(contact);
-        selectGroup(group);
+        fillAddForm();
         selectorCreateAdd();
         openHomePage();
     }
@@ -183,6 +182,28 @@ public class ContactHelper extends HelperBase {
             var id = row.findElement(By.name("input")).getAttribute("id");
             var phones = row.findElements(By.tagName("td")).get(5).getText();
             result.put(id, phones);
+        }
+        return result;
+    }
+
+    public Map<String, String> getAddress2() {
+        var result = new HashMap<String, String>();
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row: rows) {
+            var id = row.findElement(By.name("input")).getAttribute("id");
+            var address = row.findElements(By.tagName("td")).get(5).getText();
+            result.put(id, address);
+        }
+        return result;
+    }
+
+    public Map<String, String> getEmails2() {
+        var result = new HashMap<String, String>();
+        List<WebElement> rows = manager.driver.findElements(By.name("entry"));
+        for (WebElement row: rows) {
+            var id = row.findElement(By.name("input")).getAttribute("id");
+            var emails = row.findElements(By.tagName("td")).get(5).getText();
+            result.put(id, emails);
         }
         return result;
     }
