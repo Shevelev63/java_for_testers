@@ -69,7 +69,7 @@ public class AddCreationTest extends TestBase {
 
     public static List<AddContact> negativeContactProvider() {
         var result = new ArrayList<AddContact>(List.of(
-                new AddContact("", "Aleksiy'", "Ivanov", "", "", "","")));
+                new AddContact("", "Aleksiy'", "Ivanov", "", "", "","", "", "", "")));
         return result;
     }
 
@@ -88,4 +88,5 @@ public class AddCreationTest extends TestBase {
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
     }
+
 }

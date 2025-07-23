@@ -24,6 +24,12 @@ import java.util.List;
         public String email;
         @Column(name = "photo")
         public String photo;
+        public String home;
+        public String work;
+        public String phone2;
+
+
+
 
         public ContactRecord() {
         }

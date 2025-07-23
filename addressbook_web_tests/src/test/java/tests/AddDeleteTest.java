@@ -14,7 +14,7 @@ public class AddDeleteTest extends TestBase {
     @Test
     public void canDeleteAdd() {
         if (!(app.hbm().getContactCount() == 0)) {
-            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", ""));
+            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "","" , "", ""));
         }
         var oldContacts = app.hbm().getContactList();
         var rnd = new Random();
@@ -29,7 +29,7 @@ public class AddDeleteTest extends TestBase {
     @Test
     void canDeleteAllContactsAtOnce() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", ""));
+            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "","" , "", ""));
         }
         app.contacts().deleteAllContacts();
         Assertions.assertEquals(0, app.hbm().getContactCount());

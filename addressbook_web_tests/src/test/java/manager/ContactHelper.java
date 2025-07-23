@@ -35,8 +35,24 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
+    public void addContactInGroup() {
+        openAddPage();
+        initContactModificatiion2(contact);
+        groupSelection(group);
+        addToContactInGroup();
+        openHomePage();
+    }
+
     private void selectGroup(GroupData group) {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
+    }
+
+    private void addToContactInGroup() {
+        click(By.linkText("add"));
+    }
+
+    private void groupSelection(GroupData group) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
     }
 
 
@@ -101,6 +117,10 @@ public class ContactHelper extends HelperBase {
         click(By.xpath(String.format("//input[@id='%s']/../..td[7]", contact.id())));
     }
 
+    private void initContactModificatiion2(AddContact contact) {
+        click(By.xpath(String.format("//input[@id='%s']/../..td[0]", contact.id())));
+    }
+
     private void selectContact(AddContact contact) {
         click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
@@ -143,6 +163,6 @@ public class ContactHelper extends HelperBase {
     }
 
     public String getPhones(AddContact contact) {
-        manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[6]", contact.id()))).getText();
+       return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[6]", contact.id()))).getText();
     }
 }
