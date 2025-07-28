@@ -142,9 +142,9 @@ public class ContactHelper extends HelperBase {
             var tds = manager.driver.findElements(By.cssSelector("td.center"));
             var checkbox = tr.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
-            var lastname = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[2]"))).getText();
-            var firstname = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[3]"))).getText();
-            var address = manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[4]"))).getText();
+            var lastname = tds.get(1).getText();
+            var firstname = tds.get(2).getText();
+            var address = tds.get(3).getText();
             contacts.add(new AddContact().withId(id).withFirstame(lastname).withLastame(firstname).withAddress(address));
         }
         return contacts;
