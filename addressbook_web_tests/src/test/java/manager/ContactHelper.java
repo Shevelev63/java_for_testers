@@ -3,8 +3,11 @@ import model.GroupData;
 import model2.AddContact;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -29,19 +32,9 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
-    public void createAdd2() {
-        openAddPage();
-        fillAddForm();
-        selectorCreateAdd();
-        openHomePage();
-    }
-
-    public void addContactInGroup() {
-        openAddPage();
-        initContactModificatiion2(contact);
-        groupSelection(group);
+    public void addContactInGroup(AddContact contact) {
+        selectContact(contact);
         addToContactInGroup();
-        openHomePage();
     }
 
     private void selectGroup(GroupData group) {
@@ -64,23 +57,18 @@ public class ContactHelper extends HelperBase {
     public void deleteAdd(AddContact contact) {
         openHomePage();
         selectContact(contact);
-        deleteSelectedContact();
+        removeFromGroup();
     }
 
-    public void deleteAdd2(AddContact contact, GroupData group) {
+    public void deleteAdd2(GroupData group, AddContact contact) {
         openHomePage();
-        selectGroupList(group);
+        selectContactGroup(group);
         selectContact(contact);
-        deleteSelectedContact();
-        removeFromContact();
+        removeFromGroup();
     }
 
     private void selectGroupList(GroupData group) {
         new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
-    }
-
-    private void deleteSelectedContact() {
-        click(By.xpath("//input[@value=\'Delete\']"));
     }
 
     public void modifyContacts(AddContact contact, AddContact modifiedContacts) {
@@ -126,7 +114,7 @@ public class ContactHelper extends HelperBase {
         click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
-    private void removeFromContact() {
+    private void removeFromGroup() {
         click(By.linkText("remove"));
     }
 
@@ -138,7 +126,7 @@ public class ContactHelper extends HelperBase {
     public void deleteAllContacts() {
         openHomePage();
         selectAllContacts();
-        deleteSelectedContact();
+        removeFromGroup();
     }
 
     private void selectAllContacts() {
@@ -163,7 +151,15 @@ public class ContactHelper extends HelperBase {
         return contacts;
     }
 
-    public String getPhones(AddContact contact) {
+    private void selectContactGroup(GroupData group) {
+        var wait = new WebDriverWait(manager.driver, Duration.ofSeconds(10));
+        var selectElement = wait.until(ExpectedConditions.presenceOfElementLocated(By.name("group")));
+        var select = new Select(selectElement);
+        select.selectByValue(group.id());
+    }
+
+
+        public String getPhones(AddContact contact) {
        return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../..td[6]", contact.id()))).getText();
     }
 

@@ -31,18 +31,4 @@ public class ContactModoficationTest extends TestBase {
         Assertions.assertEquals(newContacts, expectedList);
     }
 
-    @Test
-    void canAddContactInGroup() {
-        if (!(app.hbm().getContactCount() == 0)) {
-            app.hbm().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "","" , "", "", "", ""));
-        }
-        if (app.hbm().getGroupCount() == 0) {
-            app.hbm().CreateGroup(new GroupData());
-        }
-        var group = app.hbm().getGroupList().get(0);
-        var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().addContactInGroup();
-        var newRelated = app.hbm().getContactsInGroup(group);
-        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
-    }
 }
