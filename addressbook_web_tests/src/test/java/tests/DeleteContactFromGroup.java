@@ -6,6 +6,8 @@ import model2.AddContact;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 public class DeleteContactFromGroup extends TestBase{
     @Test
     void canDeleteContactInGroup() {
@@ -15,16 +17,28 @@ public class DeleteContactFromGroup extends TestBase{
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().CreateGroup(new GroupData());
         }
-        var group = app.hbm().getGroupList().get(0);
-        var newContactAddGroup = app.hbm().getContactsInGroup(group);
-        if (newContactAddGroup.isEmpty()) {
-            var contactInGroup = app.hbm().getContactList().get(0);
-            app.contacts().addContactInGroup(contactInGroup);
-            newContactAddGroup = app.hbm().getContactsInGroup(group);
+        var group = app.hbm().getGroupList();
+        AddContact contact;
+        GroupData groupData = group.get(0);
+        var contactsInGroup = app.hbm().getContactsInGroup(groupData);
+
+        if (contactsInGroup.isEmpty()) {
+            var contactsInNotGroup = app.hbm().getContactsNotInGroup();
+            if (contactsInNotGroup.isEmpty()) ;
+            {
+                app.contacts().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "", "", "", "", "", ""));
+            }
+            contactsInNotGroup = app.hbm().getContactsNotInGroup();
+            contact = contactsInNotGroup.get(0);
+            app.contacts().addContactInGroup(contact, groupData);
         }
-        var contactDeletes = newContactAddGroup.get(0);
-        app.contacts().deleteAdd2(group, contactDeletes);
-        var newRelated = app.hbm().getContactsInGroup(group);
-        Assertions.assertEquals(newContactAddGroup.size() - 1, newRelated.size());
+        contactsInGroup = app.hbm().getContactsNotInGroup();
+        var deletesContact = contactsInGroup.get(0);
+        app.contacts().deleteAdd2(deletesContact, groupData);
+        var oldRelated = app.hbm().getContactsInGroup(groupData);
+        var newRelated = new ArrayList<>(oldRelated);
+        newRelated.remove(deletesContact);
+        Assertions.assertEquals(oldRelated.size() - 1, newRelated.size());
     }
 }
+

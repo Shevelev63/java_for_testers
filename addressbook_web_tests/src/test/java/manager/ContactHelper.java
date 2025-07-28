@@ -32,10 +32,30 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
-    public void addContactInGroup(AddContact contact) {
+    public void addContactInGroup(AddContact contact, GroupData groupData) {
+        openAddPage();
+        initContactCreation();
+        fillAddForm(contact);
+        selectGroup2(groupData);
+        submitContactCreation();
+        openHomePage();
+    }
+
+    public void selectGroup2(GroupData groupData) {
+        new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(groupData.id());
+    }
+
+    public void inToGroup(AddContact contact, GroupData groupData) {
+        openAddPage();
         selectContact(contact);
+        selectToGroup(groupData);
         addToContactInGroup();
     }
+
+    private void selectToGroup(GroupData groupData) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(groupData.id());
+    }
+
 
     private void selectGroup(GroupData group) {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(group.id());
@@ -60,10 +80,11 @@ public class ContactHelper extends HelperBase {
         removeFromGroup();
     }
 
-    public void deleteAdd2(GroupData group, AddContact contact) {
+    public void deleteAdd2(AddContact contactDelete, GroupData groupData) {
         openHomePage();
-        selectContact(contact);
-        removeFromGroup();
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(groupData.id());
+        selectContact(contactDelete);
+        manager.driver.findElement(By.name("remove")).click();
     }
 
     private void selectGroupList(GroupData group) {
@@ -105,12 +126,9 @@ public class ContactHelper extends HelperBase {
         click(By.xpath(String.format("//input[@id='%s']/../..td[6]", contact.id())));
     }
 
-    private void initContactModificatiion2(AddContact contact) {
-        click(By.xpath(String.format("//input[@id='%s']/../..td[1]", contact.id())));
-    }
 
     private void selectContact(AddContact contact) {
-        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
+        click(By.cssSelector(String.format("input[id='%s']", contact.id())));
     }
 
     private void removeFromGroup() {
@@ -121,6 +139,15 @@ public class ContactHelper extends HelperBase {
         openHomePage();
         return manager.driver.findElements(By.name("selected[]")).size();
     }
+
+    private void initContactCreation() {
+        click(By.linkText("add new"));
+    }
+
+    private void submitContactCreation() {
+        click(By.name("submit"));
+    }
+
 
     public void deleteAllContacts() {
         openHomePage();

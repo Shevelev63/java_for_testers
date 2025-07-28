@@ -1,6 +1,7 @@
 package manager.hbm;
 
 import jakarta.persistence.*;
+import model.GroupData;
 
 import java.util.Date;
 import java.util.List;
@@ -29,6 +30,7 @@ import java.util.List;
         public String phone2;
         public String email2;
         public String email3;
+    public List<GroupRecord> groups;
 
 
 
