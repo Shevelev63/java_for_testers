@@ -62,7 +62,6 @@ public class ContactHelper extends HelperBase {
 
     public void deleteAdd2(GroupData group, AddContact contact) {
         openHomePage();
-        selectContactGroup(group);
         selectContact(contact);
         removeFromGroup();
     }

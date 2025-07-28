@@ -84,7 +84,7 @@ public class AddCreationTest extends TestBase {
         }
         var group = app.hbm().getGroupList().get(0);
         var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().createAdd2(contact, group);
+        app.contacts().createAdd(contact);
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
     }
