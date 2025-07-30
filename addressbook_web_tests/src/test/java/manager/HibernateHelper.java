@@ -61,7 +61,7 @@ public class HibernateHelper extends HelperBase {
             session.getTransaction().begin();
             session.persist(convert(groupData));
             session.getTransaction().commit();
-                });
+        });
     }
 
     static List<AddContact> convertListContact(List<ContactRecord> contactRecords) {
@@ -132,5 +132,13 @@ public class HibernateHelper extends HelperBase {
             return (groups != null) && (!groups.isEmpty());
         });
         return allContacts;
+    }
+
+    public String getIdContactByName(String firstame) {
+        return sessionFactory.fromSession(session -> {
+            return session.createQuery(String.format("select id from ContactRecord where firstname='%s'",
+                            firstame),
+                    Integer.class).getSingleResult().toString();
+        });
     }
 }

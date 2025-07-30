@@ -28,11 +28,11 @@ public class ContactHelper extends HelperBase {
     public void createAdd(AddContact contact) {
         openAddPage();
         fillAddForm(contact);
-        selectorCreateAdd();
+        submitContactCreation();
         openHomePage();
     }
 
-    public void addContactInGroup(AddContact contact, GroupData groupData) {
+    public void  createContactInGroup(AddContact contact, GroupData groupData) {
         openAddPage();
         initContactCreation();
         fillAddForm(contact);
@@ -45,9 +45,9 @@ public class ContactHelper extends HelperBase {
         new Select(manager.driver.findElement(By.name("new_group"))).selectByValue(groupData.id());
     }
 
-    public void inToGroup(AddContact contact, GroupData groupData) {
+    public void inToGroup(AddContact contactAdd, GroupData groupData) {
         openAddPage();
-        selectContact(contact);
+        selectContact(contactAdd);
         selectToGroup(groupData);
         addToContactInGroup();
     }

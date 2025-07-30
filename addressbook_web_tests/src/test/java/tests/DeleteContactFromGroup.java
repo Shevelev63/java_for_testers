@@ -30,7 +30,7 @@ public class DeleteContactFromGroup extends TestBase{
             }
             contactsInNotGroup = app.hbm().getContactsNotInGroup();
             contact = contactsInNotGroup.get(0);
-            app.contacts().addContactInGroup(contact, groupData);
+            app.contacts().inToGroup(contact, groupData);
         }
         contactsInGroup = app.hbm().getContactsNotInGroup();
         var deletesContact = contactsInGroup.get(0);
