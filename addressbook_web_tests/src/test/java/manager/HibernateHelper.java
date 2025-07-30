@@ -3,9 +3,11 @@ import manager.hbm.ContactRecord;
 import manager.hbm.GroupRecord;
 import model.GroupData;
 import model2.AddContact;
+import net.bytebuddy.asm.MemberSubstitution;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
+import org.junit.jupiter.api.condition.DisabledIfSystemProperties;
 
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class HibernateHelper extends HelperBase {
         }
         return new GroupRecord(Integer.parseInt(id), data.name(), data.header(), data.footer());
     }
+
 
     public List<GroupData> getGroupList() {
         return convertList(sessionFactory.fromSession(session -> {

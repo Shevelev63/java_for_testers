@@ -166,12 +166,11 @@ public class ContactHelper extends HelperBase {
         var contacts = new ArrayList<AddContact>();
         var trs = manager.driver.findElements(By.cssSelector("tr.entry"));
         for (var tr : trs) {
-            var tds = manager.driver.findElements(By.cssSelector("td.center"));
-            var checkbox = tr.findElement(By.name("selected[]"));
-            var id = checkbox.getAttribute("value");
-            var lastname = tds.get(1).getText();
-            var firstname = tds.get(2).getText();
-            var address = tds.get(3).getText();
+            var tds = tr.findElements(By.tagName("td"));
+            String id = String.valueOf(Integer.parseInt(tds.get(0).findElement(By.cssSelector("input[type='checkbox']")).getAttribute("value")));
+            String lastname = tds.get(1).getText();
+            String firstname = tds.get(2).getText();
+            String address = tds.get(3).getText();
             contacts.add(new AddContact().withId(id).withFirstame(lastname).withLastame(firstname).withAddress(address));
         }
         return contacts;
