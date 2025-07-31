@@ -33,7 +33,6 @@ public class ApplicationManager {
                } else {
                    driver = new FirefoxDriver();
                }
-               driver = new FirefoxDriver();
            } else if ("chrome".equals(browser)) {
                if (seleniumServer != null) {
                    driver = new RemoteWebDriver(new URL(seleniumServer), new ChromeOptions());
