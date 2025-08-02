@@ -30,6 +30,11 @@ import java.util.List;
         public String phone2;
         public String email2;
         public String email3;
+
+    @ManyToMany
+    @JoinTable(name = "addressbook",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn(name = "group_id"))
     public List<GroupRecord> groups;
 
 
