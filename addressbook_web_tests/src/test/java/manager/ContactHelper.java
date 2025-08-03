@@ -25,8 +25,9 @@ public class ContactHelper extends HelperBase {
         }
     }
 
-    public void createAdd(AddContact contact) {
+    public void createAdd1(AddContact contact) {
         openAddPage();
+        initContactCreation();
         fillAddForm(contact);
         submitContactCreation();
         openHomePage();
@@ -119,7 +120,6 @@ public class ContactHelper extends HelperBase {
         type(By.name("address"), contact.address());
         type(By.name("mobile"), contact.mobile());
         type(By.name("email"), contact.email());
-        attach(By.name("photo"), contact.photo());
     }
 
     private void initContactModificatiion(AddContact contact) {
@@ -140,10 +140,10 @@ public class ContactHelper extends HelperBase {
         return manager.driver.findElements(By.name("selected[]")).size();
     }
 
+
     private void initContactCreation() {
         click(By.linkText("add new"));
     }
-
     private void submitContactCreation() {
         click(By.name("submit"));
     }

@@ -28,7 +28,7 @@ public class AddContactInGroup extends TestBase{
     @MethodSource("createRandomContact")
     void canAddContactInGroup(AddContact contact) {
         if (!(app.contacts().getCount() == 0)) {
-            app.contacts().createAdd(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "","" , "", "", "", ""));
+            app.contacts().createAdd1(new AddContact("", "Ivanov", "Ivan", "Street1", "89325665", "2@yandex.com", "","" , "", "", "", ""));
         }
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().CreateGroup(new GroupData());
@@ -36,7 +36,7 @@ public class AddContactInGroup extends TestBase{
         var group = app.hbm().getGroupList();
         AddContact contactAdd;
         GroupData groupData = group.getFirst();
-        var contactsNotInGroup = app.hbm().getContactsNotInGroup();
+        var contactsNotInGroup = app.hbm().getContactsInGroup(groupData);
         var oldRelated = app.hbm().getContactsInGroup(groupData);
 
         if (contactsNotInGroup.isEmpty()) {
@@ -44,7 +44,7 @@ public class AddContactInGroup extends TestBase{
             app.contacts().inToGroup(contactAdd,groupData);
         }
         else {
-            app.contacts().createAdd(contact);
+            app.contacts().createAdd1(contact);
             contact = contact.withId(app.hbm().getIdContactByName(contact.firstname()));
             app.contacts().inToGroup(contact,groupData);
             contactAdd = contact;

@@ -22,7 +22,7 @@ public class AddCreationTest extends TestBase {
     @MethodSource("contactProvider")
     public void canCreateMultipleContacts(AddContact add) {
         var oldContacts = app.hbm().getContactList();
-        app.contacts().createAdd(add);
+        app.contacts().createAdd1(add);
         var newContacts = app.hbm().getContactList();
         Comparator<AddContact> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
@@ -62,7 +62,7 @@ public class AddCreationTest extends TestBase {
     @MethodSource("negativeContactProvider")
     public void canNotCreateContacts(AddContact add) {
         var oldContacts = app.hbm().getContactList();
-        app.contacts().createAdd(add);
+        app.contacts().createAdd1(add);
         var newContacts = app.hbm().getContactList();
         Assertions.assertEquals(newContacts, oldContacts);
     }
@@ -84,9 +84,8 @@ public class AddCreationTest extends TestBase {
         }
         var group = app.hbm().getGroupList().get(0);
         var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().createAdd(contact);
+        app.contacts().createAdd1(contact);
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
     }
-
 }

@@ -10,6 +10,7 @@ import org.hibernate.cfg.Configuration;
 import org.junit.jupiter.api.condition.DisabledIfSystemProperties;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class HibernateHelper extends HelperBase {
@@ -35,7 +36,7 @@ public class HibernateHelper extends HelperBase {
         return new GroupData("" + record.id, record.name, record.header, record.footer);
     }
 
-    private static GroupRecord convert(GroupData data) {
+    private static GroupRecord convertGroup(GroupData data) {
         var id = data.id();
         if ("".equals(id)) {
             id = "0";
@@ -59,14 +60,13 @@ public class HibernateHelper extends HelperBase {
     public void CreateGroup(GroupData groupData) {
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
-            session.persist(convert(groupData));
+            session.persist(convertGroup(groupData));
             session.getTransaction().commit();
         });
     }
 
     static List<AddContact> convertListContact(List<ContactRecord> contactRecords) {
-        return contactRecords.stream().map(HibernateHelper::convertContact).toList();
-
+        return contactRecords.stream().map(HibernateHelper::convertContact).collect(Collectors.toList());
     }
 
     private static AddContact convertContact(ContactRecord contactRecord) {
@@ -118,21 +118,7 @@ public class HibernateHelper extends HelperBase {
             return convertListContact(session.get(GroupRecord.class, group.id()).contacts);
         });
     }
-
-    public List<GroupData> getGroupsByContact(AddContact contact) {
-        return sessionFactory.fromSession(session -> {
-            return convertList(session.get(ContactRecord.class, contact.id()).groups);
-        });
-    }
-
-    public List<AddContact> getContactsNotInGroup() {
-        var allContacts = getContactList();
-        allContacts.removeIf(contact -> {
-            var groups = getGroupsByContact(contact);
-            return (groups != null) && (!groups.isEmpty());
-        });
-        return allContacts;
-    }
+    
 
     public String getIdContactByName(String firstame) {
         return sessionFactory.fromSession(session -> {
