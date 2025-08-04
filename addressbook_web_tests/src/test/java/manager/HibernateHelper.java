@@ -118,7 +118,7 @@ public class HibernateHelper extends HelperBase {
             return convertListContact(session.get(GroupRecord.class, group.id()).contacts);
         });
     }
-    
+
 
     public String getIdContactByName(String firstame) {
         return sessionFactory.fromSession(session -> {

@@ -47,10 +47,11 @@ public class ContactHelper extends HelperBase {
     }
 
     public void inToGroup(AddContact contactAdd, GroupData groupData) {
-        openAddPage();
+        openHomePage();
         selectContact(contactAdd);
         selectToGroup(groupData);
         addToContactInGroup();
+        openHomePage();
     }
 
     private void selectToGroup(GroupData groupData) {
@@ -63,7 +64,7 @@ public class ContactHelper extends HelperBase {
     }
 
     private void addToContactInGroup() {
-        click(By.linkText("add"));
+        click(By.cssSelector("input[type='submit'][value='Add to']"));
     }
 
     private void groupSelection(GroupData group) {
@@ -128,7 +129,7 @@ public class ContactHelper extends HelperBase {
 
 
     private void selectContact(AddContact contact) {
-        click(By.cssSelector(String.format("input[id='%s']", contact.id())));
+        click(By.cssSelector(String.format("input[id='%s'][name='selected[]']", contact.id())));
     }
 
     private void removeFromGroup() {
